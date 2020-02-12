@@ -61,11 +61,11 @@ namespace TSVtoMetaeditor
 
                     while (!tsvReader.EndOfStream)
                     {
-                        var fields = tsvReader.ReadLine();
+                        var fields      = tsvReader.ReadLine();
 
-                        var imgPath = fields[imgPathColIdx];
-                        var jsonData = fields[jsonColIdx];
-                        jsonData = jsonData[1..^1].Replace("\"\"", "\"");
+                        var imgPath     = fields[imgPathColIdx];
+                        var jsonData    = fields[jsonColIdx];
+                        jsonData        = jsonData[1..^1].Replace("\"\"", "\"");
 
                         var jsonMarkupInfo = JsonConvert.DeserializeObject<List<MarkupInfo>>(jsonData);
 
