@@ -8,14 +8,25 @@ namespace TSVtoMetaeditor.Xml
 {
     public static class XmlHelper
     {
-        public static void WriteToFile(string startPath, string imgPath, List<MarkupInfo> jsonMarkup, string outputDir)
+        public static bool Replace = true;
+        public static void WriteToFile(
+            string startPath, 
+            string imgPath,
+            List<MarkupInfo> jsonMarkup,
+            string outputDir)
         {
-            var serializer = new XmlSerializer(typeof(Image));
-            var realImg = System.Drawing.Image.FromFile(Path.Combine(startPath, imgPath));
             var savePath = Path.Combine(
                     outputDir,
                     Path.ChangeExtension(imgPath, ".xml"));
-            
+
+            if (File.Exists(savePath) && !Replace)
+            {
+                Console.WriteLine($"Skiped -noreplace: {savePath}");
+                return;
+            }
+
+            var serializer = new XmlSerializer(typeof(Image));
+            var realImg = System.Drawing.Image.FromFile(Path.Combine(startPath, imgPath));
             // Create directory
             new FileInfo(savePath).Directory.Create();
 
